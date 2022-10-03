@@ -31,26 +31,26 @@ class _HomePageState extends State<HomePage> {
   final password = RandomPasswordGenerator();
   Color? passwordColor = null;
   String? passwordStatus = null;
-  String? outputPassword = null;
+  String? passwordOutput = null;
   TextEditingController panjangController = new TextEditingController();
 
   void generatePassword(int panjangKarakter) {
-    outputPassword = password.randomPassword(
+    passwordOutput = password.randomPassword(
         letters: isLowerCase,
+        uppercase: isUpperCase,
         numbers: isNomor,
-        passwordLength: panjangKarakter.toDouble(),
         specialChar: isSimbol,
-        uppercase: isUpperCase);
-    double passwordstrength = password.checkPassword(password: outputPassword!);
-    if (passwordstrength < 0.3) {
+        passwordLength: panjangKarakter.toDouble());
+    double passwordStrength = password.checkPassword(password: passwordOutput!);
+    if (passwordStrength < 0.3) {
       passwordColor = Colors.red;
-      passwordStatus = 'This password is weak!';
-    } else if (passwordstrength < 0.7) {
+      passwordStatus = "Password lemah";
+    } else if (passwordStrength < 0.7) {
       passwordColor = Colors.blue;
-      passwordStatus = 'This password is Good';
+      passwordStatus = "Password kuat";
     } else {
       passwordColor = Colors.green;
-      passwordStatus = 'This passsword is Strong';
+      passwordStatus = "Password sangat kuat";
     }
   }
 
@@ -58,123 +58,127 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [
-                Text(
-                  "Aplikasi Password Generator",
-                  style: TextStyle(fontSize: 20),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Mengandung Upper case"),
-                    Switch(
-                        value: isUpperCase,
-                        onChanged: (value) {
-                          setState(() {
-                            isUpperCase = value;
-                          });
-                        })
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Mengandung Lower Case"),
-                    Switch(
-                        value: isLowerCase,
-                        onChanged: (value) {
-                          setState(() {
-                            isLowerCase = value;
-                          });
-                        })
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Mengandung Simbol"),
-                    Switch(
-                        value: isSimbol,
-                        onChanged: (value) {
-                          setState(() {
-                            isSimbol = value;
-                          });
-                        })
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Mengandung Nomor"),
-                    Switch(
-                        value: isNomor,
-                        onChanged: (value) {
-                          setState(() {
-                            isNomor = value;
-                          });
-                        })
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                TextField(
-                  controller: panjangController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                      labelText: "Panjang karakter",
-                      border: OutlineInputBorder(
-                        borderSide: new BorderSide(),
-                      )),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    generatePassword(
-                        int.parse(panjangController.text.toString()));
-                    setState(() {});
-                  },
-                  child: Text("Buat Password"),
-                  style: ElevatedButton.styleFrom(
-                      minimumSize: Size.fromHeight(50)),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                outputPassword != null
-                    ? Column(
-                        children: [
-                          Text("👇👇👇👇👇"),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(outputPassword!, style: TextStyle(fontSize: 19)),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(passwordStatus!,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                children: [
+                  Text(
+                    "Aplikasi Password Generator",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Mengandung Upper Case"),
+                      Switch(
+                          value: isUpperCase,
+                          onChanged: (value) {
+                            setState(() {
+                              isUpperCase = value;
+                            });
+                          })
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Mengandung Lower Case"),
+                      Switch(
+                          value: isLowerCase,
+                          onChanged: (value) {
+                            setState(() {
+                              isLowerCase = value;
+                            });
+                          })
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Mengandung Simbol"),
+                      Switch(
+                          value: isSimbol,
+                          onChanged: (value) {
+                            setState(() {
+                              isSimbol = value;
+                            });
+                          })
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Mengandung Nomor"),
+                      Switch(
+                          value: isNomor,
+                          onChanged: (value) {
+                            setState(() {
+                              isNomor = value;
+                            });
+                          })
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextField(
+                    controller: panjangController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        labelText: "Panjang Karakter",
+                        border:
+                            OutlineInputBorder(borderSide: new BorderSide())),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        generatePassword(
+                            int.parse(panjangController.text.toString()));
+                        setState(() {});
+                      },
+                      child: Text("Buat Password"),
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: Size.fromHeight(50))),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  passwordOutput != null
+                      ? Column(
+                          children: [
+                            Text("👇👇👇👇👇👇"),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              passwordOutput!,
+                              style: TextStyle(fontSize: 19),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              passwordStatus!,
                               style: TextStyle(
                                   color: passwordColor != null
                                       ? passwordColor
-                                      : Colors.black))
-                        ],
-                      )
-                    : SizedBox()
-              ],
+                                      : Colors.black),
+                            )
+                          ],
+                        )
+                      : SizedBox()
+                ],
+              ),
             ),
           ),
         ),
-      )),
+      ),
     );
   }
 }
